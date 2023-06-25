@@ -1,0 +1,88 @@
+<!-- /*  Name : Kaung Si Phyo
+    Admission Number: 2234878
+    class: DIT/FT/1B/05*/ -->
+
+<!DOCTYPE html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://localhost:3001/static/css/cart.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+</head>
+
+<body class="container" style="background-color: black;">
+    <h1 style="color: white;">SP DVD Cart</h1>
+
+    <div class="shopping-cart" id="cart" style="display: block;">
+
+        <div class="product" id="cartdetail" style="display: block; ">
+        </div>
+        <div style="display: flex; justify-content: center; margin-top: 10px;margin-bottom: 30px;"><button id="checkout"
+                class="button fire" onclick="window.history.back()">Back</button></div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    const baseUrl = "http://localhost:8081";
+    const user_id = localStorage.getItem("userInfo");
+    const token = localStorage.getItem("usertoken");
+    const cartData = JSON.parse(localStorage.getItem(`cartData${user_id}`));
+    if (token === null || token == undefined || isNaN(user_id)) {
+        window.location.href = "/spdvd/customerLogin";
+    } else {
+        // retrieve all data about login user payment
+        $.ajax({
+            method: 'GET',
+            url: `${baseUrl}/getAllPayments`,
+            data: {
+                customer_id: user_id
+            },
+            headers: {
+                    "Authorization": "Bearer " + token
+                },
+            contentType: 'application/json',
+            success: function (response) {
+                if (response != null) {
+                    console.log(response);
+                    response.forEach((dvd) => {
+                        $("#cartdetail").append(
+                            `<div style="display: flex; flex-direction: row; justify-content: space-between;align-items: center;
+                            border-color: #c000c0; border-width: 2px;  margin-top:10px; border-style: solid; border-radius:10px;
+                            padding: 10px">
+                            <div >
+                            <img src="${baseUrl}/static/${dvd.image_name}" style="width: 150px;height:150px;">
+                        </div>
+                        <div>
+                        <div class="product-title" >${dvd.title}</div>
+                        </div>
+                        <div style="width=100px" class="product-line-price">$${dvd.rental_rate}</div>
+                        <div>  
+                        </div>
+                        </div>`
+                        )
+                    });
+
+                }
+            },error: function (xhr, textStatus, errorThrown) {
+                        console.log(xhr.responseText);
+                        alert("You need to log in again to use these services");
+                }
+        });
+    }
+</script>
+
+</html>

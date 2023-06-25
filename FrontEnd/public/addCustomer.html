@@ -1,0 +1,279 @@
+<!-- /*  Name : Kaung Si Phyo
+    Admission Number: 2234878
+    class: DIT/FT/1B/05*/ -->
+<html>
+
+<head>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+        integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="http://localhost:3001/static/css/addCustomer.css">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+</head>
+
+<body>
+    <header id="nav-wrapper">
+        <nav id="nav">
+            <div class="nav left">
+                <span class="gradient skew">
+                    <h1 class="logo un-skew" style="padding-top: 20">SP DVD</h1>
+                </span>
+                <button id="menu" class="btn-nav"><span class="fas fa-bars"></span></button>
+            </div>
+            <div class="nav right">
+                <a href="/spdvd/admin" class="nav-link"><span class="nav-link-span"><span class="u-nav">Add
+                            actors</span></span></a>
+                <a href="#" class="nav-link active"><span class="nav-link-span"><span class="u-nav">Add
+                            customers</span></span></a>
+                <a href="/spdvd/addDvD" class="nav-link"><span class="nav-link-span"><span class="u-nav">Add
+                            DVD</span></span></a>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <h1 style="color: white; font-size: xx-large;">Add Customers</h1>
+        <div autocomplete="on">
+
+            <div class="box">
+                <label for="store id" class="fl fontLabel"> Store: </label>
+                <div class="new iconBox">
+                    <i class="fas fa-store" aria-hidden="true"></i>
+                </div>
+                <div class="fr">
+                    <select id="storePicker" name="stores" class="textbox" required>
+                    </select>
+                </div>
+                <div class="clr"></div>
+            </div>
+            <!--First name-->
+            <div class="box">
+                <label for="firstName" class="fl fontLabel"> First Name: </label>
+                <div class="new iconBox">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                </div>
+                <div class="fr">
+                    <input type="text" name="firstName" placeholder="First Name" class="textBox" autofocus="on"
+                        id="first_name" required>
+                </div>
+                <div class="clr"></div>
+            </div>
+            <!--First name-->
+
+            <!--Second name-->
+            <div class="box">
+                <label for="secondName" class="fl fontLabel"> Second Name: </label>
+                <div class="fl iconBox"><i class="fa fa-user" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="text" required name="secondName" placeholder="Last Name" class="textBox"
+                        id="last_name">
+                </div>
+                <div class="clr"></div>
+            </div>
+            <!--Second name-->
+            <!---Email ID---->
+            <div class="box">
+                <label for="email" class="fl fontLabel"> Email: </label>
+                <div class="fl iconBox"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="email" required name="email" placeholder="Email" class="textBox" id="email">
+                </div>
+                <div class="clr"></div>
+            </div>
+            <!--Email ID----->
+            <div class="box">
+                <label for="password" class="fl fontLabel"> Address line 1: </label>
+                <div class="fl iconBox"><i class="fa fa-key" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="password" required name="password" placeholder="password" class="textBox"
+                        id="password">
+                </div>
+                <div class="clr"></div>
+            </div>
+            <!---address------>
+            <div class="box">
+                <label for="address1" class="fl fontLabel"> Address line 1: </label>
+                <div class="fl iconBox"><i class="fa fa-key" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="text" required name="address1" placeholder="address" class="textBox" id="address1">
+                </div>
+                <div class="clr"></div>
+            </div>
+            <!---address---->
+
+            <!---address------>
+            <div class="box">
+                <label for="address2" class="fl fontLabel"> Address line 2: </label>
+                <div class="fl iconBox"><i class="fa fa-key" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="text" name="address2" placeholder="address" class="textBox" id="address2">
+                </div>
+                <div class="clr"></div>
+            </div>
+            <!---address---->
+            <div class="box">
+                <label for="district" class="fl fontLabel"> District: </label>
+                <div class="fl iconBox"><i class="fa fa-key" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="text" required name="district" placeholder="district" class="textBox" id="district">
+                </div>
+                <div class="clr"></div>
+            </div>
+
+            <div class="box">
+                <label for="city" class="fl fontLabel"> City: </label>
+                <div class="fl iconBox"><i class="fa fa-key" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="text" required name="city" placeholder="City" class="textBox" id="city">
+                </div>
+                <div class="clr"></div>
+            </div>
+            <div class="box">
+                <label for="postalCode" class="fl fontLabel"> Postal Code: </label>
+                <div class="fl iconBox"><i class="fa fa-key" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="number" required name="postalCode" placeholder="Postal Code" class="textBox"
+                        id="postalCode">
+                </div>
+                <div class="clr"></div>
+            </div>
+            <div class="box">
+                <label for="Phone" class="fl fontLabel"> Phone: </label>
+                <div class="fl iconBox"><i class="fa fa-key" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="tel" required name="Phone" placeholder="Phone number" class="textBox" id="phone">
+                </div>
+                <div class="clr"></div>
+            </div>
+
+
+
+            <!---Submit Button------>
+            <div class="box" style="background: #2d3e3f">
+                <button name="Submit" class="submit" value="add Customer" id="addCustomer">Add Customer</button>
+            </div>
+            <!---Submit Button----->
+            <div class="box" style="background: #2d3e3f">
+                <button name="Submit" class="submit" value="add Customer" id="logout">Logout</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    const baseUrl = "http://localhost:8081";
+    const token = localStorage.getItem("token");
+    const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
+
+    if (token === null || isNaN(loggedInUserID)) {
+        window.location.href = "/spdvd/admin/login";
+    } else {
+        isUserLoggedIn = true;
+        $(document).ready(function () {
+
+            $.ajax({
+                url: 'http://localhost:8081/store',
+                type: 'GET',
+                dataType: "json",
+                success: function (data, textStatus, xhr) {
+                    if (data != null) {
+                        console.log(data);
+                        data.forEach((storeObject) => {
+                            $("#storePicker").append(
+                                `<option value=${storeObject.store_id}>${storeObject.address},${storeObject.district},${storeObject.city_id}</option>`
+                            )
+                        });
+                    } else {
+                        console.log("Error");
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log(xhr.responseText);
+                    console.log(errorThrown);
+                }
+            });
+
+            $("#addCustomer").click((event) => {
+                const store_id = $("#storePicker").val();
+                const first_name = $("#first_name").val();
+                const last_name = $("#last_name").val();
+                const email = $("#email").val();
+                const password = $("#password").val();
+                const address1 = $("#address1").val();
+                const address2 = $("#address2").val();
+                const district = $("#district").val();
+                const city = $("#city").val();
+                const postalCode = $("#postalCode").val();
+                const phoneNum = $("#phone").val();
+                const requestBody = {
+                    store_id: store_id,
+                    first_name: first_name,
+                    last_name: last_name,
+                    email: email,
+                    password: password,
+                    address_line1: address1,
+                    address_line2: address2,
+                    district: district,
+                    city: city,
+                    postal_code: postalCode,
+                    phone: phoneNum
+
+                };
+                console.log(requestBody);
+                $.ajax({
+                    type: "POST",
+                    url: `${baseUrl}/admin/addCustomer`,
+                    data: requestBody,
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    },
+                    success: function (addCondition) {
+                        console.log(addCondition);
+                        alert(addCondition.message);
+                        document.getElementById("first_name").value = "";
+                        document.getElementById("last_name").value = "";
+                        document.getElementById("email").value = "";
+                        document.getElementById("password").value = "";
+                        document.getElementById("address1").value = "";
+                        document.getElementById("address2").value = "";
+                        document.getElementById("district").value = "";
+                        document.getElementById("city").value = "";
+                        document.getElementById("postalCode").value = "";
+                        document.getElementById("phone").value = "";
+                    },
+                    error: (xhr, textStatus, errorThrown) => {
+                        console.log(xhr.responseJSON)
+                        if( xhr.responseJSON!=undefined){
+                            alert(xhr.responseJSON.message);
+                        }else
+                        alert("You need to login again to use these function")
+
+                    }
+                });
+
+            });
+
+            $("#logout").click(function () {
+            window.localStorage.removeItem(token);
+            window.localStorage.removeItem(loggedInUserID);
+            isUserLoggedOut = true;
+            window.location.href = "/spdvd/admin/login"
+        });
+        })
+    }
+</script>
+
+</html>

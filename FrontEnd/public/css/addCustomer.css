@@ -1,0 +1,287 @@
+/*-------------Reset-------------*/
+/*  Name : Kaung Si Phyo
+    Admission Number: 2234878
+    class: DIT/FT/1B/05*/
+button {
+    background: none;
+    box-shadow: none;
+    border: none;
+    cursor: pointer;
+}
+
+button:focus,
+input:focus {
+    outline: 0;
+}
+
+
+/*-------------Layout-------------*/
+/*-------------Helpers-------------*/
+.skew {
+    transform: skew(-20deg);
+}
+
+.un-skew {
+    transform: skew(20deg);
+}
+
+/*-------------Nav-------------*/
+#nav-wrapper {
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+#nav {
+    background-color: #fff;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    font-family: "Saira Semi Condensed", sans-serif;
+    height: 4em;
+    overflow: hidden;
+}
+
+#nav.nav-visible {
+    height: 100%;
+    overflow: auto;
+}
+
+.nav {
+    display: flex;
+    height: 4em;
+    line-height: 4em;
+    flex-grow: 1;
+}
+
+.nav-link,
+.logo {
+    padding: 0 1em;
+
+}
+
+span.gradient {
+    background: #f857a8;
+    background: -webkit-linear-gradient(45deg, #f857a8, #ff5858);
+    background: linear-gradient(45deg, #f857a8, #ff5858);
+    padding: 0 1em;
+    position: relative;
+    right: 1em;
+    margin-right: auto;
+}
+
+span.gradient:hover {
+    animation-name: logo-hover;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.17, 0.57, 0.31, 0.85);
+}
+
+h1.logo {
+    font-weight: 300;
+    font-size: 1.75em;
+    line-height: 0.75em;
+    color: #fff;
+}
+
+h1.logo a,
+a:active,
+a:hover,
+a:visited {
+    text-decoration: none;
+    color: #fff;
+}
+
+.nav-link {
+    text-transform: uppercase;
+    text-align: center;
+    border-top: 0.5px solid #ddd;
+}
+
+a:link,
+a:visited,
+a:active {
+    text-decoration: none;
+    color: #f857a8;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.btn-nav {
+    color: #f857a8;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+@media (min-width: 800px) {
+    #nav-wrapper {
+        overflow: hidden;
+    }
+
+    #nav {
+        overflow: hidden;
+        flex-direction: row;
+    }
+
+    .nav-link {
+        border-top: none;
+    }
+
+    .right {
+        overflow: hidden;
+        flex-direction: row;
+        justify-content: flex-end;
+        position: relative;
+        left: 1.5em;
+        height: auto;
+    }
+
+    .btn-nav {
+        display: none;
+    }
+
+    .nav a:link.active,
+    a:visited.active,
+    a:active.active {
+        background: #f857a8;
+        background: -webkit-linear-gradient(45deg, #f857a8, #ff5858);
+        background: linear-gradient(45deg, #f857a8, #ff5858);
+        color: #fff;
+    }
+
+    .nav-link-span {
+        transform: skew(20deg);
+        display: inline-block;
+    }
+
+    .nav-link {
+        transform: skew(-20deg);
+        color: #777;
+        text-decoration: none;
+    }
+
+    .nav-link:last-child {
+        padding-right: 3em;
+    }
+
+    a:hover.nav-link:not(.active) {
+        color: #444;
+        background: #ddd;
+        background: linear-gradient(45deg, #fff, #ddd);
+    }
+}
+
+@keyframes logo-hover {
+    20% {
+        padding-right: 0em;
+    }
+
+    100% {
+        padding-right: 5em;
+    }
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: url(http://wrbbradio.org/wp-content/uploads/2016/10/grey-background-07.jpg) no-repeat center fixed;
+    background-size: cover;
+}
+
+.container {
+    background: #2d3e3f;
+    width: 550px;
+    height: 750px;
+    padding-bottom: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    padding: 70px 50px 20px 50px;
+}
+
+.fl {
+    float: left;
+    width: 110px;
+    line-height: 35px;
+}
+
+.fontLabel {
+    color: white;
+}
+
+.fr {
+    float: right;
+}
+
+.clr {
+    clear: both;
+}
+
+.box {
+    width: 360px;
+    height: 35px;
+    margin-top: 10px;
+    font-family: verdana;
+    font-size: 12px;
+}
+
+.textBox {
+    height: 35px;
+    width: 200px;
+    border: none;
+    padding-left: 20px;
+}
+
+.new {
+    float: left;
+}
+
+.iconBox {
+    height: 35px;
+    width: 40px;
+    line-height: 38px;
+    text-align: center;
+    padding-top: 10;
+    background: #ff6600;
+}
+
+.radio {
+    color: white;
+    background: #2d3e3f;
+    line-height: 38px;
+}
+
+.terms {
+    line-height: 35px;
+    text-align: center;
+    background: #2d3e3f;
+    color: white;
+}
+
+.submit {
+    float: right;
+    border: none;
+    color: white;
+    width: 110px;
+    height: 35px;
+    background: #ff6600;
+    text-transform: uppercase;
+    cursor: pointer;
+}

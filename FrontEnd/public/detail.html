@@ -1,0 +1,309 @@
+
+<!-- /*  Name : Kaung Si Phyo
+    Admission Number: 2234878
+    class: DIT/FT/1B/05*/ -->
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SP DVD detail</title>
+    <link rel="stylesheet" href="http://localhost:3001/static/css/detail.css">
+    <link rel="stylesheet" href="http://localhost:3001/static/css/comments.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+</head>
+
+<body style="background-color: black;">
+    <header id="nav-wrapper">
+        <nav id="nav">
+            <a href="/spdvd/home" style="text-decoration: none;">
+                <div class="nav left">
+                    <span class="gradient skew">
+                        <h1 class="logo un-skew" style="padding-top: 20">SP DVD</h1>
+                    </span>
+                    <button id="menu" class="btn-nav"><span class="fas fa-bars"></span></button>
+                </div>
+            </a>
+            <div class="nav right">
+                <a href="/spdvd/customerLogin" class="nav-link"><span class="nav-link-span"><span class="u-nav">Customer
+                            Login</span></span></a>
+                <a href=" http://localhost:3001/static/cart.html" class="nav-link"><span class="nav-link-span"><span
+                            class="u-nav">Cart</span></span></a>
+                <a href=" http://localhost:3001/static/payment.html" class="nav-link"><span class="nav-link-span"><span
+                            class="u-nav">Payment History</span></span></a>
+                <a onclick="logout()" class="nav-link"><span class="nav-link-span"><span class="u-nav">Log
+                            out</span></span></a>
+            </div>
+
+        </nav>
+    </header>
+    <div class="container" style="display: block; margin-top: 100px;" id="detailContext">
+        <div class="container detailcontainer black" style="font-size: larger;">
+            <div>
+                <div id="detail">
+                </div>
+                <div>
+                    <p>Actors:</p>
+                    <ul id="actors">
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div style="margin-top: 20px; " class="d-flex justify-content-between align-items-center">
+            <button id="addComments" class="button fire">Add comments</button>
+            <button id="addCart" class="button ice">Add to cart</button>
+        </div>
+    </div>
+    <div id="reviewSection" style="margin-top:30px; display: block;"></div>
+    <div id="form-main" style="display: none; margin-top: 100px;">
+        <div id="form-div">
+            <div class="form" id="form1">
+                <h2 style="color: white; font-weight: bold;">Add Review to this DVD</h1>
+                    <p class="name">
+                        <input name="name" type="text"
+                            class="validate[required,custom[onlyLetter],length[0,100]] feedback-input"
+                            placeholder="Name" id="name" />
+                    </p>
+
+                    <p class="email">
+                        <input name="email" type="email" class="validate[required,custom[email]] feedback-input"
+                            id="email" placeholder="Email" />
+                    </p>
+
+                    <p class="email">
+                        <select id="rating" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </p>
+
+                    <p class="text">
+                        <textarea name="text" class="validate[required,length[6,300]] feedback-input" id="comment"
+                            placeholder="Comment"></textarea>
+                    </p>
+
+
+                    <div class="submit">
+                        <button id="submitComments">Send</button>
+                        <div class="ease"></div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+    const baseUrl = "http://localhost:8081";
+    const params = new URLSearchParams(window.location.search);
+    const dvdId = params.get('dvdId');
+    $(document).ready(() => {
+        if (dvdId !== null && dvdId !== undefined) {
+            // autoload detail for selected dvd when page loaded
+            axios.get(`${baseUrl}/getFilmDetail`, {
+                    params: {
+                        film_id: dvdId
+                    }
+                })
+                .then((response) => {
+                    const detail = response.data;
+                    if (detail[2].length != 0) {
+                        $("#detail").append(
+                            `<img src="${baseUrl}/static/${detail[2][0].image_name}" style="width: 300px; "/>`
+                        )
+                    }
+                    var detailHtml = `<h2>Title: ${detail[0][0].title}</h2>
+                    
+                    <p>Category: ${detail[0][0].category}</p>
+                    <p>Release year: ${detail[0][0].release_year}</p>
+                    <p>Description: ${detail[0][0].description}</p>
+                    <p>Rating: ${detail[0][0].rating}</p>
+                    <p>Rental Rate: $${detail[0][0].rental_rate}</p>`
+                    $("#detail").append(detailHtml);
+                    detail[1].forEach((actor) => {
+                        const actorHtml = `<li>${actor.first_name} ${actor.last_name}</li>`
+                        $("#actors").append(actorHtml);
+                    });
+                    const data = {
+                        film_id: dvdId
+                    };
+
+                    //retrieve data for comments
+                    $.ajax({
+                        url: 'http://localhost:8081/getComments',
+                        type: 'GET',
+                        data: data,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data, textStatus, xhr) {
+                            if (data != null) {
+                                data.forEach((review) => {
+                                    console.log(review.comment_id)
+                                    $("#reviewSection").append(
+                                        `<div class="card container marginButtom">
+                                <div class="card-header row justify-content-between"">
+                                    <h5>${review.name}</h5>
+                                    <div id="star${review.comment_id}"></div>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">${review.comment}</p>
+                                </div>
+                            </div>`
+                                    )
+                                    for (i = 0; i < review.rating_score; i++) {
+                                        $(`#star${review.comment_id}`).append(
+                                            `<span class="fa fa-star checked"></span>`
+                                        );
+                                    }
+                                    for (i = 0; i < (5 - review.rating_score); i++) {
+                                        $(`#star${review.comment_id}`).append(
+                                            `<span class="fa fa-star"></span>`);
+                                    }
+                                });
+                            } else {
+                                console.log("Error");
+                            }
+                            console.log(textStatus);
+                            console.log(xhr);
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            console.log('Error in Operation');
+                        }
+                    })
+                });
+        } else {
+            window.location.assign("http://localhost:3001/spdvd/home");
+        }
+    })
+
+    // add comment box
+    $("#addComments").click(() => {
+        var detail = document.getElementById("detailContext");
+        var comment = document.getElementById("form-main");
+        var review = document.getElementById("reviewSection");
+        detail.style.display = "none";
+        review.style.display = "none";
+        comment.style.display = "block";
+
+    })
+
+
+    // check the store have dvd copy and add to cart
+    $("#addCart").click(() => {
+        var token = localStorage.getItem("usertoken");
+        var userInfo = localStorage.getItem("userInfo");
+        if (token === null || token == undefined || isNaN(userInfo)) {
+            window.location.assign("http://localhost:3001/spdvd/customerLogin")
+        } else {
+            const data = {
+                user_id: userInfo,
+                film_id: dvdId
+            };
+            $.ajax({
+                url: 'http://localhost:8081/getInventoryID',
+                type: 'GET',
+                data: data,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                success: function (data, textStatus, xhr) {
+                    console.log(data);
+                    if (data != null && data.length == 0) {
+                        alert("This DVD is out of stock in your registered store");
+                    } else if (data != null) {
+                        cartData = JSON.parse(localStorage.getItem(`cartData${userInfo}`));
+                        cartData.push(data[0].inventory_id);
+                        cartData = [...new Set(cartData)];
+                        localStorage.setItem(`cartData${userInfo}`, JSON.stringify(cartData));
+                    } else {
+                        console.log("Error");
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log(xhr.responseText);
+                    alert("You need to log in again to use these services");
+                }
+            });
+        }
+    })
+
+
+    // submit comments to backend
+    $("#submitComments").click(() => {
+        var name = $("#name").val();
+        var email = $("#email").val();
+        var rating = $("#rating").val();
+        var comment = $("#comment").val();
+        console.log(dvdId)
+        var data = JSON.stringify({
+            name: name,
+            email: email,
+            rating: rating,
+            comment: comment,
+            film_id: dvdId
+        });
+        console.log(data);
+        $.ajax({
+            url: 'http://localhost:8081/addComments',
+            type: 'POST',
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, xhr) {
+                if (data != null) {
+                    var detail = document.getElementById("detailContext");
+                    var comments = document.getElementById("form-main");
+                    var review = document.getElementById("reviewSection");
+                    alert(data.message);
+                    detail.style.display = "block";
+                    review.style.display = "block";
+                    comments.style.display = "none";
+
+                } else {
+                    console.log("Error");
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error in Operation');
+            }
+        });
+        console.log(data);
+    })
+
+    function logout() {
+        const user_id = localStorage.getItem(`userInfo`);
+        localStorage.removeItem(`usertoken`);
+        localStorage.removeItem(`userInfo`);
+        const cartData = JSON.parse(localStorage.getItem(`cartData${user_id}`));
+        if (cartData.length == 0) {
+            localStorage.removeItem(`cartData${user_id}`);
+        }
+        alert("user logged out");
+    }
+</script>
+
+</html>

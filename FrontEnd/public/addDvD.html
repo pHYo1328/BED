@@ -1,0 +1,365 @@
+<!-- /*  Name : Kaung Si Phyo
+    Admission Number: 2234878
+    class: DIT/FT/1B/05*/ -->
+<html>
+
+<head>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+        integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="http://localhost:3001/static/css/addDvD.css">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+</head>
+
+<body>
+    <header id="nav-wrapper">
+        <nav id="nav">
+            <div class="nav left">
+                <span class="gradient skew">
+                    <h1 class="logo un-skew" style="padding-top: 20">SP DVD</h1>
+                </span>
+                <button id="menu" class="btn-nav"><span class="fas fa-bars"></span></button>
+            </div>
+            <div class="nav right">
+                <a href="/spdvd/admin" class="nav-link"><span class="nav-link-span"><span class="u-nav">Add
+                            actors</span></span></a>
+                <a href="/spdvd/addCustomer" class="nav-link"><span class="nav-link-span"><span class="u-nav">Add
+                            customers</span></span></a>
+                <a href="#" class="nav-link active"><span class="nav-link-span"><span class="u-nav">Add
+                            DVD</span></span></a>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <h1 style="color: white; font-size: xx-large;">Add DVD</h1>
+        <div autocomplete="on">
+            <div class="box">
+                <label for="title" class="fl fontLabel"> Film Title: </label>
+                <div class="new iconBox">
+                    <i class="fa fa-film" aria-hidden="true"></i>
+                </div>
+                <div class="fr">
+                    <input type="text" name="title" placeholder="Film Title" class="textBox" autofocus="on"
+                        id="film_title" required>
+                </div>
+                <div class="clr"></div>
+            </div>
+            <div class="box">
+                <label for="category" class="fl fontLabel"> Category: </label>
+                <div class="new iconBox">
+                    <i class="fas fa-store" aria-hidden="true"></i>
+                </div>
+                <div class="fr">
+                    <select id="category" name="stores" class="textbox" required>
+                    </select>
+                </div>
+                <div class="clr"></div>
+            </div>
+
+            <div class="box">
+                <label for="store id" class="fl fontLabel"> Store: </label>
+                <div class="new iconBox">
+                    <i class="fas fa-store" aria-hidden="true"></i>
+                </div>
+                <div class="fr">
+                    <select id="storePicker" name="stores" class="textbox" required>
+                    </select>
+                </div>
+                <div class="clr"></div>
+            </div>
+            <div class="box">
+                <label for="release_year" class="fl fontLabel">Release Year:</label>
+                <div class="fl iconBox"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="text" name="release_year" placeholder="Film release year" class="textBox"
+                        id="release_year">
+                </div>
+                <div class="clr"></div>
+            </div>
+            <!--Second name-->
+            <!---Email ID---->
+            <div class="box">
+                <label for="language" class="fl fontLabel"> Language: </label>
+                <div class="fl iconBox"><i class="fa fa-language" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <select id="language" name="language" class="textbox" required>
+                    </select>
+                </div>
+                <div class="clr"></div>
+            </div>
+            <!--Email ID----->
+
+            <!---address------>
+            <div class="box">
+                <label for="originalLanguage" class="fl fontLabel"> Native Language: </label>
+                <div class="fl iconBox"><i class="fa fa-language" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <select id="originalLanguage" name="originalLanguage" class="textbox" required>
+                    </select>
+                </div>
+                <div class="clr"></div>
+            </div>
+            <!---address---->
+
+            <!---address------>
+            <div class="box">
+                <label for="rentalDuration" class="fl fontLabel"> Rental Duration: </label>
+                <div class="fl iconBox"><i class="fa fa-clock" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="number" name="rentalDuration" placeholder="Rental Duration" class="textBox"
+                        id="rentalDuration">
+                </div>
+                <div class="clr"></div>
+            </div>
+            <!---address---->
+            <div class="box">
+                <label for="rentalRate" class="fl fontLabel"> Rental Rate: </label>
+                <div class="fl iconBox"><i class="fa fa-dollar" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="number" name="rentalRate" placeholder="Rental Rate" class="textBox" id="rentalRate">
+                </div>
+                <div class="clr"></div>
+            </div>
+
+            <div class="box">
+                <label for="filmLength" class="fl fontLabel"> Film Length: </label>
+                <div class="fl iconBox"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="number" name="filmLength" placeholder="Film Length" class="textBox" id="filmLength">
+                </div>
+                <div class="clr"></div>
+            </div>
+            <div class="box">
+                <label for="replacement_cost" class="fl fontLabel"> Replacement: </label>
+                <div class="fl iconBox"><i class="fa fa-dollar" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="number" name="replacement_cost" placeholder="replacement_cost" class="textBox"
+                        id="replacement_cost">
+                </div>
+                <div class="clr"></div>
+            </div>
+            <div class="box">
+                <label for="Rating" class="fl fontLabel"> Rating: </label>
+                <div class="fl iconBox"><i class="fa fa-star" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="text" name="Rating" placeholder="Rating" class="textBox" id="Rating">
+                </div>
+                <div class="clr"></div>
+            </div>
+            <div class="box">
+                <label for="specialFeatures" class="fl fontLabel"> Special Features: </label>
+                <div class="fl iconBox"><i class="fa fa-magic" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="text" name="specialFeatures" placeholder="Special Features" class="textBox"
+                        id="specialFeatures">
+                </div>
+                <div class="clr"></div>
+            </div>
+            <div class="box">
+                <label for="FilmDescription" class="fl fontLabel"> Film Description </label>
+                <div class="fl iconBox"><i class="fa fa-file-movie-o" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <textarea name="FilmDescription" placeholder="Film Description" class="textbox"
+                        id="filmDescription"></textarea>
+                </div>
+                <div class="clr"></div>
+            </div>
+
+            <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+            <div class="file-upload" style="margin-top: 30px;">
+                <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add
+                    Image</button>
+
+                <div class="image-upload-wrap">
+                    <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*"
+                        id="image" />
+                    <div class="drag-text">
+                        <h3>Drag and drop a file or select add Image</h3>
+                    </div>
+                </div>
+                <div class="file-upload-content">
+                    <img class="file-upload-image" src="#" alt="your image" />
+                    <div class="image-title-wrap">
+                        <button type="button" onclick="removeUpload()" class="remove-image">Remove <span
+                                class="image-title">Uploaded Image</span></button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!---Submit Button------>
+            <div class="box" style="background: #2d3e3f">
+                <button name="Submit" class="submit" value="add DVD" id="addDvD">Add DVD</button>
+            </div>
+            <!---Submit Button----->
+            <div class="box" style="background: #2d3e3f">
+                <button name="Submit" class="submit" value="logout" id="logout">Logout</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var image;
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            image = input;
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('.image-upload-wrap').hide();
+
+                $('.file-upload-image').attr('src', e.target.result);
+                $('.file-upload-content').show();
+
+                $('.image-title').html(input.files[0].name);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        } else {
+            removeUpload();
+        }
+    }
+
+    function removeUpload() {
+        $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+        $('.file-upload-content').hide();
+        $('.image-upload-wrap').show();
+    }
+    $('.image-upload-wrap').bind('dragover', function () {
+        $('.image-upload-wrap').addClass('image-dropping');
+    });
+    $('.image-upload-wrap').bind('dragleave', function () {
+        $('.image-upload-wrap').removeClass('image-dropping');
+    });
+    const baseUrl = "http://localhost:8081";
+    const token = localStorage.getItem("token");
+    const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
+    console.log(token)
+    if (token === null || isNaN(loggedInUserID)) {
+        window.location.href = "/spdvd/admin/login";
+    } else {
+        $(document).ready(function () {
+
+            //prepare data for select 
+            $.ajax({
+                url: 'http://localhost:8081/store',
+                type: 'GET',
+                dataType: "json",
+                success: function (data, textStatus, xhr) {
+                    if (data != null) {
+                        console.log(data);
+                        data.forEach((storeObject) => {
+                            $("#storePicker").append(
+                                `<option value=${storeObject.store_id}>${storeObject.address},${storeObject.district},${storeObject.city_id}</option>`
+                            )
+                        });
+                    } else {
+                        console.log("Error");
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log(xhr.responseText);
+                    console.log(errorThrown);
+                }
+            });
+            $("#addDvD").click(() => {
+                const formData = new FormData();
+                formData.append("title", $("#film_title").val());
+                formData.append("store_id", $('#storePicker').val());
+                formData.append("category", $("#category").val());
+                formData.append("release_year", $("#release_year").val());
+                formData.append("language", $("#language").val());
+                formData.append("original_language", $("#originalLanguage").val());
+                formData.append("rental_duration", $("#rentalDuration").val());
+                formData.append("rental_rate", $("#rentalRate").val());
+                formData.append("film_length", $("#filmLength").val());
+                formData.append("replacement_cost", $("#replacement_cost").val());
+                formData.append("rating", $("#Rating").val());
+                formData.append("film_description", $("#filmDescription").val());
+                formData.append("special_features", $("#specialFeatures").val());
+                formData.append("image", image.files[0]);
+                $.ajax({
+                    url: 'http://localhost:8081/addDvD',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    },
+                    success: function (data, textStatus, xhr) {
+                        if (data != null) {
+                            console.log(data.message);
+                            alert(data.message)
+                        } else {
+                            console.log("Error");
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log(xhr.responseText);
+                        
+                        alert("You need to login again to use these function")
+                    }
+                });
+            })
+            $.ajax({
+                url: 'http://localhost:8081/language',
+                type: 'GET',
+                dataType: "json",
+                success: function (data, textStatus, xhr) {
+                    if (data != null) {
+                        console.log(data);
+                        data.forEach((language) => {
+                            $("#language").append(
+                                `<option value=${language.language_id}>${language.name}</option>`
+                            )
+                            $("#originalLanguage").append(
+                                `<option value=${language.language_id}>${language.name}</option>`
+                            )
+                        });
+                    } else {
+                        console.log("Error");
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log(xhr.responseText);
+                    console.log(errorThrown);
+                }
+            });
+            axios.get(`${baseUrl}/category`)
+                .then((response) => {
+                    const categories = response.data;
+                    categories.forEach((category) => {
+                        const categoriesHtml = `
+                <option value=${category.category_id}>${category.name}</option>
+            `;
+
+                        $("#category").append(categoriesHtml);
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        })
+    }
+</script>
+
+</html>

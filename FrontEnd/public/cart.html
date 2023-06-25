@@ -1,0 +1,194 @@
+<!-- /*  Name : Kaung Si Phyo
+    Admission Number: 2234878
+    class: DIT/FT/1B/05*/ -->
+<!DOCTYPE html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://localhost:3001/static/css/cart.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+</head>
+
+<body class="container-fluid" style="background-color: black;">
+    <h1 style="color: white;">SP DVD Cart</h1>
+
+    <div class="shopping-cart" id="cart" style="display: block;">
+
+        <div class="product" id="cartdetail" style="display: block; ">
+        </div>
+        <div style="display: flex; flex-direction: row;justify-content: center; align-items: end;">
+            <button class="button ice" onclick="window.history.back()">Go back</button>
+            <button id="checkout" class="button fire">Checkout</button>
+        </div>
+    </div>
+    <div style="display: none;" id="payment">
+        <div id="paymentDetail">
+
+        </div>
+        <div class="totals-item" style="color: white;">
+            <div style="display: flex; flex-direction: row;justify-content: flex-end; font-size: large;padding: 10px;">
+                <label style="padding-right: 10px;">Subtotal:</label>
+                <div class="totals-value" id="cart-subtotal"></div>
+            </div>
+            <div style="display: flex; flex-direction: row;justify-content: flex-end; align-items: end;">
+                <button id="goback" class="button ice">Go back to Cart</button>
+                <button id="pay" class="button fire">Pay</button>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    const baseUrl = "http://localhost:8081";
+    const user_id = localStorage.getItem("userInfo");
+    const token = localStorage.getItem("usertoken");
+    var cartData = JSON.parse(localStorage.getItem(`cartData${user_id}`));
+    if (token === null || token == undefined || isNaN(user_id)) {
+        window.location.href = "/spdvd/customerLogin";
+    } else {
+        // get all data for car items
+        var requestArray = [];
+        for (var i = 0; i < cartData.length; i++) {
+            requestArray.push({
+                method: 'GET',
+                endpoint: `/getInventoryDVD/${cartData[i]}`
+            })
+        }
+        $.ajax({
+            method: 'POST',
+            url: `${baseUrl}/getCart`,
+            data: JSON.stringify({
+                requests: requestArray
+            }),
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            contentType: 'application/json',
+            success: function (response) {
+                var totalRentalRate = 0;
+                if (response != null) {
+                    console.log(response)
+                    response.responses.forEach((dvd) => {
+                        $("#cartdetail").append(
+                            `<div class="productWrap" style="display: flex; flex-direction: row; justify-content: space-between;align-items: center;
+                            border-color: #c000c0; border-width: 2px;  margin-top:10px; border-style: solid; border-radius:10px;
+                            padding: 10px" id="${dvd.body.inventory_id}">
+                            <div >
+                            <img src="${baseUrl}/static/${dvd.body.image_name}" style="width: 150px;height:150px;">
+                        </div>
+                        <div>
+                        <div class="product-title" >${dvd.body.title}</div>
+                        <p class="product-description">${dvd.body.description}</p>
+                        </div>
+                        <div style="width=100px" class="product-line-price">$${dvd.body.rental_rate}</div>
+                        <div>
+                        <button class="remove-product" data-iid="${dvd.body.inventory_id}" onclick="removeClicked(event)">
+                            Remove
+                        </button>   
+                        </div>
+                        </div>`
+                        )
+                        $("#paymentDetail").append(
+                            `<div id="pay${dvd.body.inventory_id}" style="display: flex;flex-direction: row; justify-content: space-between;align-items: center;
+                            border-color: #c000c0; border-width: 2px;  margin-top:10px; border-style: solid; border-radius:10px;
+                            padding: 10px">
+                            <div>
+                            <img src="${baseUrl}/static/${dvd.body.image_name}"  style="width: 150px;height:150px;">
+                        </div>
+                        <div>
+                        <div class="product-title">${dvd.body.title}</div>
+                        <p class="product-description">${dvd.body.description}</p>
+                        </div>
+                        <div style="width=100px" class="product-line-price" id="price">$${dvd.body.rental_rate}</div>
+                        </div>`
+                        )
+                        totalRentalRate += dvd.body.rental_rate;
+                    });
+
+                }
+                $("#cart-subtotal").append("$" + totalRentalRate);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log(xhr.responseText);
+                alert("You need to log in again to use these services");
+            }
+        });
+        $("#checkout").click(() => {
+            document.getElementById("payment").style.display = "block";
+            document.getElementById("cart").style.display = "none";
+        })
+
+        $("#goback").click(() => {
+            document.getElementById("payment").style.display = "none";
+            document.getElementById("cart").style.display = "block";
+        })
+
+        // pay function
+        $("#pay").click(() => {
+            var reqArray = [];
+            for (var i = 0; i < cartData.length; i++) {
+                reqArray.push({
+                    method: 'POST',
+                    endpoint: `/addRentalAndPaymentData?${JSON.stringify({inventory_id: cartData[i],user_id:parseInt(user_id)})}`
+                })
+            }
+            $.ajax({
+                method: 'POST',
+                url: `${baseUrl}/insertRecord`,
+                data: JSON.stringify({
+                    requests: reqArray
+                }),
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                contentType: 'application/json',
+                success: function (response) {
+                    reqArray = [];
+                    console.log(response);
+                    localStorage.setItem(`cartData${user_id}`, JSON.stringify([]));
+                    window.location.assign("http://localhost:3001/spdvd/home");
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log(xhr.responseText);
+                    alert("You need to log in again to use these services");
+                }
+            });
+        })
+    }
+
+    // function for remove the items inside cart
+    function removeClicked(event) {
+        var itemData = $(event.currentTarget).data("iid");
+        itemData = `${itemData}`;
+        document.getElementById(`${itemData}`).remove();
+        const paymentDetail = document.querySelector("#paymentDetail");
+        const removePrice = paymentDetail.querySelector(`#pay${itemData}`).querySelector("#price").innerHTML.replace(
+            '$', '');
+        paymentDetail.querySelector(`#pay${itemData}`).remove();
+        var subtotal = document.querySelector("#cart-subtotal").innerHTML.replace('$', '');
+        console.log(removePrice);
+        var recalculated = subtotal - removePrice;
+        console.log(recalculated);
+        document.querySelector("#cart-subtotal").innerHTML = "$" + recalculated;
+        cartData = cartData.filter((id) => id != itemData);
+        localStorage.setItem(`cartData${user_id}`, JSON.stringify(cartData));
+
+    }
+</script>
+
+</html>

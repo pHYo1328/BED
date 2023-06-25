@@ -1,0 +1,100 @@
+<!-- /*  Name : Kaung Si Phyo
+    Admission Number: 2234878
+    class: DIT/FT/1B/05*/ -->
+<!DOCTYPE html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://localhost:3001/static/css/customerLogin.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="form-structor">
+        <div class="signup">
+            <h2 class="form-title" id="signup">You need to log in your customer account before you rent DVD</h2>
+        </div>
+        <div class="login slide-up">
+            <div class="center">
+                <h2 class="form-title" id="login" style="font-size:30px">Log in</h2>
+                <div class="form-holder">
+                    <input type="email" class="input" placeholder="Email" id="email" />
+                    <input type="password" class="input" placeholder="Password" id="password" />
+                </div>
+                <button class="submit-btn" id="Login">Log in</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    console.clear();
+
+    const loginBtn = document.getElementById("login");
+    const signupBtn = document.getElementById("signup");
+
+    loginBtn.addEventListener("click", (e) => {
+        let parent = e.target.parentNode.parentNode;
+        Array.from(e.target.parentNode.parentNode.classList).find((element) => {
+            if (element !== "slide-up") {
+                parent.classList.add("slide-up");
+            } else {
+                parent.classList.remove("slide-up");
+            }
+        });
+    });
+    const baseUrl = "http://localhost:8081";
+    const params = new URLSearchParams(window.location.search);
+    const dvdId = params.get('dvdId');
+    // login function for user
+    $("#Login").click((event) => {
+        // prevent page reload
+        event.preventDefault();
+        const email = $("#email").val();
+        const password = $("#password").val();
+        const requestBody = JSON.stringify({
+            email: email,
+            password: password
+        });
+        console.log(requestBody);
+        $.ajax({
+            url: 'http://localhost:8081/user/login',
+            type: 'POST',
+            data: requestBody,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, xhr) {
+                if (data != null) {
+                    var cardData=[];
+                    localStorage.setItem('usertoken', data.token);
+                    localStorage.setItem('userInfo', data.user_id);
+                    const previousCart=localStorage.getItem(`cartData${data.user_id}`);
+                    if(previousCart==null)
+                    localStorage.setItem(`cartData${data.user_id}`,JSON.stringify(cardData));
+                   if(dvdId!=null){
+                    window.location.assign("http://localhost:3001/spdvd/detail?dvdId="+dvdId)
+                   }
+                   else  window.location.assign("http://localhost:3001/spdvd/home");
+                } else {
+                    console.log(xhr);
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseJSON.message);
+            }
+        });
+    })
+</script>
+
+</html>

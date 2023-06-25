@@ -1,0 +1,292 @@
+<!-- /*  Name : Kaung Si Phyo
+    Admission Number: 2234878
+    class: DIT/FT/1B/05*/ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SP DVD</title>
+    <link rel="stylesheet" href="http://localhost:3001/static/css/home.css">
+    <link rel="stylesheet" href="http://localhost:3001/static/css/result.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body style="background-color: black;">
+    <header id="nav-wrapper">
+        <nav id="nav">
+            <div class="nav left">
+                <span class="gradient skew">
+                    <h1 class="logo un-skew" style="padding-top: 20">SP DVD</h1>
+                </span>
+                <button id="menu" class="btn-nav"><span class="fas fa-bars"></span></button>
+            </div>
+            <div class="nav right">
+                <a href="/spdvd/customerLogin" class="nav-link"><span class="nav-link-span"><span class="u-nav">Customer
+                            Login</span></span></a>
+                <a href=" http://localhost:3001/static/cart.html" class="nav-link"><span class="nav-link-span"><span
+                            class="u-nav">Cart</span></span></a>
+                <a href=" http://localhost:3001/static/payment.html" class="nav-link"><span class="nav-link-span"><span
+                            class="u-nav">Payment History</span></span></a>
+                <a onclick="logout()" class="nav-link"><span class="nav-link-span"><span class="u-nav">Log
+                            out</span></span></a>
+            </div>
+
+        </nav>
+    </header>
+    <div class="container" style="margin-top: 70px; ">
+        <h2 style="color: white; display: flex; justify-content: center;">Welcome From SO DVD!!!<br>What do you want to
+            find?</h2>
+        <div class=row style="margin-top: 2rem;">
+            <div class="col-12">
+                <div class="wrap">
+                    <div class="search">
+                        <select class="form-select searchTerm " style="border-radius: 5px 0 0 5px;" id="category">
+                            <option value="" selected>Search by category</option>
+                        </select>
+                        <input type="text" class="searchTerm" placeholder="Search dvd title" id="titleSearch">
+                        <input type="text" class="searchTerm" placeholder="max rental rate" id="rentalRate">
+                        <button type="submit" class="searchButton" id="search">
+                            <i class="fa fa-search"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="container-fluid ">
+        <div id="resultContainer" class="card-container">
+            <div id="results"></div>
+        </div>
+        <div id="pagination"></div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+    const baseUrl = "http://localhost:8081";
+    var categoryID = null;
+    var title = null;
+    var rentalRate = null;
+    // load automatically to get all categories
+    var pages = 126;
+    var pageNumber = 1;
+
+    // retrieve film data
+    function getFilmData() {
+        $.ajax({
+            url: `${baseUrl}/GetAllFilms`,
+            type: 'GET',
+            data: {
+                pageSize: 6,
+                pageNumber: pageNumber
+            },
+            success: function (response) {
+                const dvds = response;
+                dvds.forEach((dvd) => {
+                    const dvdhtml = `
+                                <div class="card" style="margin: 2rem;" data-card-data="${dvd.film_id}" onclick="cardClicked(event)">
+                                <div class="card-header">
+                                    <p>Title: ${dvd.title}</p>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">Release year: ${dvd.release_year}</p>
+                                    <p class="card-text">Rating: ${dvd.rating}</p>
+                                    <p class="card-text">Rental Rate: $${dvd.rental_rate}</p>
+                                    <p class="card-text">Category: ${dvd.name}</p>
+                                </div>
+                                </div>
+                            `;
+                    $("#results").append(dvdhtml);
+                });
+            }
+        });
+    }
+
+    axios.get(`${baseUrl}/category`)
+        .then((response) => {
+            const categories = response.data;
+            categories.forEach((category) => {
+                const categoriesHtml = `
+                <option value=${category.category_id}>${category.name}</option>
+            `;
+
+                $("#category").append(categoriesHtml);
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+    $.ajax({
+        url: `${baseUrl}/GetCountOFAllFilms`,
+        type: 'GET',
+        data: {
+            pageSize: 6,
+            pageNumber: pageNumber
+        },
+        success: function (response) {
+            pages = Math.ceil(response[0].count / 6);
+            document.getElementById('pagination').innerHTML = createPagination(pages, 1);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+
+    $("#category").on("change", function () {
+        categoryID = $(this).val();
+    })
+
+    // send data to result page
+    $("#search").click((event) => {
+        var title = $("#titleSearch").val();
+        var rentalRate = $("#rentalRate").val();
+        requestBody = {
+            title: title,
+            rentalRate: rentalRate,
+            categoryID: categoryID
+        }
+        window.location.assign("http://localhost:3001/spdvd/result?data=" + JSON.stringify(requestBody));
+
+    })
+
+
+    $("#customerLogin").click(() => {
+        window.location.assign("http://localhost:3001/spdvd/customerLogin")
+    })
+
+    function cardClicked(event) {
+        var cardData = $(event.currentTarget).data("card-data");
+        window.location.assign("http://localhost:3001/spdvd/detail?dvdId=" + cardData)
+    }
+
+    // create Pagination efect
+    function createPagination(pages, page) {
+        let str = '<ul>';
+        let active;
+        let pageCutLow = page - 1;
+        let pageCutHigh = page + 1;
+        // Show the Previous button only if you are on a page other than the first
+        if (page > 1) {
+            str += '<li class="page-item previous no"><a onclick="createPagination(pages, ' + (page - 1) +
+                ')">Previous</a></li>';
+        }
+        // Show all the pagination elements if there are less than 6 pages total
+        if (pages < 6) {
+            for (let p = 1; p <= pages; p++) {
+                active = page == p ? "active" : "no";
+                str += '<li class="' + active + '"><a onclick="createPagination(pages, ' + p + ')" data-page=' +
+                    page + ' id ="paginationNumber">' + p +
+                    '</a></li>';
+            }
+        }
+        // Use "..." to collapse pages outside of a certain range
+        else {
+            // Show the very first page followed by a "..." at the beginning of the
+            // pagination section (after the Previous button)
+            if (page > 2) {
+                str += '<li class="no page-item"><a onclick="createPagination(pages, 1)" data-page=' + page +
+                    '>1</a></li>';
+                if (page > 3) {
+                    str += '<li class="out-of-range"><a onclick="createPagination(pages,' + (page - 2) +
+                        ')" data-page=' + page + ' id ="paginationNumber">...</a></li>';
+                }
+            }
+            // Determine how many pages to show after the current page index
+            if (page === 1) {
+                pageCutHigh += 2;
+            } else if (page === 2) {
+                pageCutHigh += 1;
+            }
+            // Determine how many pages to show before the current page index
+            if (page === pages) {
+                pageCutLow -= 2;
+            } else if (page === pages - 1) {
+                pageCutLow -= 1;
+            }
+            // Output the indexes for pages that fall inside the range of pageCutLow
+            // and pageCutHigh
+            for (let p = pageCutLow; p <= pageCutHigh; p++) {
+                if (p === 0) {
+                    p += 1;
+                }
+                if (p > pages) {
+                    continue
+                }
+                active = page == p ? "active" : "no";
+                str += '<li class="page-item ' + active + '"><a onclick="createPagination(pages, ' + p +
+                    ')" data-page=' + page + ' id ="paginationNumber">' + p +
+                    '</a></li>';
+            }
+            // Show the very last page preceded by a "..." at the end of the pagination
+            // section (before the Next button)
+            if (page < pages - 1) {
+                if (page < pages - 2) {
+                    str += '<li class="out-of-range"><a onclick="createPagination(pages,' + (page + 2) +
+                        ')" data-page=' + page + '>...</a></li>';
+                }
+                str += '<li class="page-item no"><a onclick="createPagination(pages, pages)" data-page=' + page +
+                    ' id ="paginationNumber">' + pages +
+                    '</a></li>';
+            }
+        }
+        // Show the Next button only if you are on a page other than the last
+        if (page < pages) {
+            str += '<li class="page-item next no"><a onclick="createPagination(pages, ' + (page + 1) +
+                ')">Next</a></li>';
+        }
+        str += '</ul>';
+        // Return the pagination string to be outputted in the pug templates
+        console.log(str);
+        document.getElementById('pagination').innerHTML = str;
+        pageNumber = page;
+        const results = document.getElementById("results");
+        while (results.firstChild) {
+            results.removeChild(results.firstChild);
+        }
+        getFilmData();
+        return str;
+    }
+
+    function logout() {
+        const user_id = localStorage.getItem(`userInfo`);
+        localStorage.removeItem(`usertoken`);
+        localStorage.removeItem(`userInfo`);
+        const cartData = JSON.parse(localStorage.getItem(`cartData${user_id}`));
+        if (cartData.length == 0) {
+            localStorage.removeItem(`cartData${user_id}`);
+        }
+        alert("user logged out");
+    }
+
+    // logout function
+    function logout() {
+        const user_id = localStorage.getItem(`userInfo`);
+        localStorage.removeItem(`usertoken`);
+        localStorage.removeItem(`userInfo`);
+        const cartData = JSON.parse(localStorage.getItem(`cartData${user_id}`));
+        if (cartData.length == 0) {
+            localStorage.removeItem(`cartData${user_id}`);
+        }
+        alert("user logged out");
+    }
+</script>
+
+</html>

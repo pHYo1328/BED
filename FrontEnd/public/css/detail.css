@@ -1,0 +1,371 @@
+/*  Name : Kaung Si Phyo
+    Admission Number: 2234878
+    class: DIT/FT/1B/05*/
+* {
+    font-family: "Poppins";
+}
+
+.black {
+    color: white;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 20px;
+}
+
+.detailcontainer {
+    background-color: black;
+    border-color: #c000c0;
+    border-radius: 20px;
+    border-style: solid;
+    border-width: 2px;
+}
+
+.marginButtom {
+    margin-bottom: 30px;
+}
+
+.checked {
+    color: goldenrod;
+}
+
+.button {
+    border: 1px solid green;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transform: skewX(-10deg);
+    height: 50px;
+    width: 200px;
+    border-radius: 20px 5px 20px 0px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font: 15px sans-serif;
+    font-weight: 300;
+    text-shadow: 0 0 20px #fff;
+    text-transform: uppercase;
+    -webkit-animation: breath2 2s 0.5s infinite alternate;
+    animation: breath2 2s 0.5s infinite alternate;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.button:before {
+    content: "";
+    display: block;
+    width: calc(100% - 22px);
+    height: calc(50px - 8px);
+    -webkit-animation: breath 2s infinite alternate;
+    animation: breath 2s infinite alternate;
+    left: 10px;
+    top: 3px;
+    position: absolute;
+    background-color: transparent;
+    border: 1px solid #fff;
+    border-radius: 15px 3px 15px 3px;
+}
+
+.button.fire {
+    border-color: #ffeca8;
+    background-image: linear-gradient(to bottom, rgba(255, 138, 48, 0.6), rgba(240, 96, 29, 0.6));
+    box-shadow: 0 0 70px rgba(255, 138, 48, 0.6), 0 5px 20px rgba(255, 138, 48, 0.6), inset 0 1px #ffeca8, inset 0 -1px #ffeca8;
+    color: black;
+}
+
+.button.fire:before {
+    box-shadow: inset 0 0 30px 0 #ffeca8;
+}
+
+.button.ice {
+    border-color: #a8ecff;
+    background-image: linear-gradient(to bottom, rgba(48, 138, 255, 0.5), rgba(29, 96, 240, 0.5));
+    box-shadow: 0 0 70px rgba(48, 138, 255, 0.5), 0 5px 20px rgba(48, 138, 255, 0.5), inset 0 1px #ffeca8, inset 0 -1px #ffeca8;
+    color: black;
+}
+
+.button.ice:before {
+    box-shadow: inset 0 0 30px 0 #a8ecff;
+}
+
+.button:hover.fire {
+    box-shadow: 0 0 70px rgba(255, 138, 48, 0.8), 0 5px 20px rgba(255, 138, 48, 0.8), inset 0 1px #ffeca8, inset 0 -1px #ffeca8;
+}
+
+.button:hover.fire:before {
+    box-shadow: inset 0 0 50px 0 #ffeca8;
+}
+
+.button:hover.ice {
+    box-shadow: 0 0 70px rgba(48, 138, 255, 0.8), 0 5px 20px rgba(48, 138, 255, 0.8), inset 0 1px #a8ecff, inset 0 -1px #a8ecff;
+}
+
+.button:hover.ice:before {
+    box-shadow: inset 0 0 50px 0 #a8ecff;
+}
+
+.button+.button {
+    margin-top: 15px;
+    -webkit-animation-delay: 0.3s;
+    animation-delay: 0.3s;
+}
+
+@-webkit-keyframes breath {
+    0% {
+        transform: scaleX(1);
+    }
+
+    100% {
+        transform: scaleX(0.95);
+    }
+}
+
+@keyframes breath {
+    0% {
+        transform: scaleX(1);
+    }
+
+    100% {
+        transform: scaleX(0.95);
+    }
+}
+
+@-webkit-keyframes breath2 {
+    0% {
+        transform: skewX(-10deg) scaleX(1);
+    }
+
+    100% {
+        transform: skewX(-10deg) scaleX(0.95);
+    }
+}
+
+@keyframes breath2 {
+    0% {
+        transform: skewX(-10deg) scaleX(1);
+    }
+
+    100% {
+        transform: skewX(-10deg) scaleX(0.95);
+    }
+}
+
+.ref {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 3px;
+    padding: 5px 8px;
+    position: absolute;
+    font-size: 16px;
+    bottom: 10px;
+    right: 10px;
+    color: #fff;
+    font-weight: 300;
+    font-family: sans-serif;
+    text-decoration: none;
+}
+
+.ref::first-letter {
+    font-size: 12px;
+}
+
+/*Resize the wrap to see the search bar change!*/
+/*-------------Reset-------------*/
+button {
+    background: none;
+    box-shadow: none;
+    border: none;
+    cursor: pointer;
+}
+
+button:focus,
+input:focus {
+    outline: 0;
+}
+
+
+/*-------------Layout-------------*/
+body {
+    line-height: 1.5em;
+    padding: 0;
+    margin: 0;
+}
+
+/*-------------Helpers-------------*/
+.skew {
+    transform: skew(-20deg);
+}
+
+.un-skew {
+    transform: skew(20deg);
+}
+
+/*-------------Nav-------------*/
+#nav-wrapper {
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+#nav {
+    background-color: #fff;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    font-family: "Saira Semi Condensed", sans-serif;
+    height: 4em;
+    overflow: hidden;
+}
+
+#nav.nav-visible {
+    height: 100%;
+    overflow: auto;
+}
+
+.nav {
+    display: flex;
+    height: 4em;
+    line-height: 4em;
+    flex-grow: 1;
+}
+
+.nav-link,
+.logo {
+    padding: 0 1em;
+
+}
+
+span.gradient {
+    background: #f857a8;
+    background: -webkit-linear-gradient(45deg, #f857a8, #ff5858);
+    background: linear-gradient(45deg, #f857a8, #ff5858);
+    padding: 0 1em;
+    position: relative;
+    right: 1em;
+    margin-right: auto;
+}
+
+span.gradient:hover {
+    animation-name: logo-hover;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.17, 0.57, 0.31, 0.85);
+}
+
+h1.logo {
+    font-weight: 300;
+    font-size: 1.75em;
+    line-height: 0.75em;
+    color: #fff;
+    padding-top: 20px;
+}
+
+h1.logo a,
+a:active,
+a:hover,
+a:visited {
+    text-decoration: none;
+    color: #fff;
+}
+
+.nav-link {
+    text-transform: uppercase;
+    text-align: center;
+    border-top: 0.5px solid #ddd;
+}
+
+a:link,
+a:visited,
+a:active {
+    text-decoration: none;
+    color: #f857a8;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.btn-nav {
+    color: #f857a8;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+@media (min-width: 800px) {
+    #nav-wrapper {
+        overflow: hidden;
+    }
+
+    #nav {
+        overflow: hidden;
+        flex-direction: row;
+    }
+
+    .nav-link {
+        border-top: none;
+    }
+
+    .right {
+        overflow: hidden;
+        flex-direction: row;
+        justify-content: flex-end;
+        position: relative;
+        left: 1.5em;
+        height: auto;
+    }
+
+    .btn-nav {
+        display: none;
+    }
+
+    .nav a:link.active,
+    a:visited.active,
+    a:active.active {
+        background: #f857a8;
+        background: -webkit-linear-gradient(45deg, #f857a8, #ff5858);
+        background: linear-gradient(45deg, #f857a8, #ff5858);
+        color: #fff;
+    }
+
+    .nav-link-span {
+        transform: skew(20deg);
+        display: inline-block;
+    }
+
+    .nav-link {
+        transform: skew(-20deg);
+        color: #777;
+        text-decoration: none;
+    }
+
+    .nav-link:last-child {
+        padding-right: 3em;
+    }
+
+    a:hover.nav-link:not(.active) {
+        color: #444;
+        background: #ddd;
+        background: linear-gradient(45deg, #fff, #ddd);
+    }
+}
+
+@keyframes logo-hover {
+    20% {
+        padding-right: 0em;
+    }
+
+    100% {
+        padding-right: 5em;
+    }
+}
